@@ -137,7 +137,10 @@ class TaskProgressController extends Controller
     private function logToFirestore(User $employee, Task $task, TaskProgress $progress, $newValue): void
     {
         try {
-            $firestore  = new FirestoreClient(['projectId' => env('GCP_PROJECT_ID')]);
+            $firestore  = new FirestoreClient([
+                'projectId' => env('GCP_PROJECT_ID'),
+                'transport' => 'rest'
+            ]);
             $collection = $firestore->collection('activityLogs');
 
             $previousProgress = TaskProgress::where('task_id', $task->id)
@@ -168,7 +171,10 @@ class TaskProgressController extends Controller
     private function sendLowProgressNotification(User $employee, Task $task, float $percentage): void
     {
         try {
-            $firestore  = new FirestoreClient(['projectId' => env('GCP_PROJECT_ID')]);
+            $firestore  = new FirestoreClient([
+                'projectId' => env('GCP_PROJECT_ID'),
+                'transport' => 'rest'
+            ]);
             $collection = $firestore->collection('notifications');
 
             $collection->add([

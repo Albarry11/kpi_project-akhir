@@ -122,7 +122,10 @@ class KpiWeightController extends Controller
     {
         try {
             $period    = Period::find($periodId);
-            $firestore = new FirestoreClient(['projectId' => env('GCP_PROJECT_ID')]);
+            $firestore = new FirestoreClient([
+                'projectId' => env('GCP_PROJECT_ID'),
+                'transport' => 'rest'
+            ]);
             $firestore->collection('notifications')->add([
                 'recipientId' => $employeeId,
                 'senderId'    => Auth::id(),

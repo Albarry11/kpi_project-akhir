@@ -154,7 +154,10 @@ class EvaluationController extends Controller
     private function notifyEmployee(Evaluation $evaluation): void
     {
         try {
-            $firestore = new FirestoreClient(['projectId' => env('GCP_PROJECT_ID')]);
+            $firestore = new FirestoreClient([
+                'projectId' => env('GCP_PROJECT_ID'),
+                'transport' => 'rest'
+            ]);
             $firestore->collection('notifications')->add([
                 'recipientId' => $evaluation->employee_id,
                 'senderId'    => $evaluation->manager_id,

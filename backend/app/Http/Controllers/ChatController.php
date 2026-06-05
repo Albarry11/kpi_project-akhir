@@ -15,7 +15,10 @@ class ChatController extends Controller
 {
     private function firestore(): FirestoreClient
     {
-        return new FirestoreClient(['projectId' => env('GCP_PROJECT_ID')]);
+        return new FirestoreClient([
+            'projectId' => env('GCP_PROJECT_ID'),
+            'transport' => 'rest'
+        ]);
     }
 
     // GET /api/chats — ambil semua chat threads milik user
